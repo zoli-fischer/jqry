@@ -1,0 +1,2 @@
+# jqury
+Small jQuery alernative
