@@ -14,7 +14,7 @@ global.Element = dom.window.Element;
 global.Window = dom.window;
 global.Document = dom.window.document;
 
-describe('jqry', () => {
+describe('jQry', () => {
     it('is truthy', () => {
         expect(jQry).toBeTruthy();
     });
