@@ -55,7 +55,8 @@
         "global-require": 0,
         "react/no-unused-prop-types": [2, { "skipShapeProps": true }],
         "prefer-destructuring": ["error", {"object": true, "array": false}],
-        "prefer-spread": 0
+        "prefer-spread": 0,
+        "linebreak-style": 0
     },
     "plugins": [
         "react"

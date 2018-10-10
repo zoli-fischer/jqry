@@ -1,0 +1,42 @@
+.testHolder {
+    > table {
+        width: 100%;
+        border-spacing: 0px;
+
+        thead {
+            tr {
+                background: #cccccc;
+
+                th {
+                    border: 1px solid #000000;
+                    border-right: 0px;
+                    padding: 5px;
+
+                    &:last-child {
+                        border-right: 1px solid #000000;
+                    }
+                }
+            }
+        }
+
+        tbody {
+            tr {
+                td {
+                    border: 1px solid #999999;
+                    border-top: 0px;
+                    border-right: 0px;
+                    padding: 5px;
+
+                    &:last-child {
+                        border-right: 1px solid #999999;
+                    }
+                }
+
+                &.error {
+                    background: #ff0000;
+                    color: #ffffff;
+                }
+            }
+        }
+    }
+}

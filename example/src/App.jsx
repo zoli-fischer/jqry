@@ -63,7 +63,7 @@ class App extends AutoState {
                     <tbody>
                         {
                             this.state.tests.map(test => (
-                                <tr key={test.id}>
+                                <tr key={test.id} className={(test.error ? 'error' : '')}>
                                     <td><code>{test.label}</code></td>
                                     <td>{test.result}</td>
                                     <td>{typeof test.result}</td>
