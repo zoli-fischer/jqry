@@ -9,7 +9,7 @@ export default class Style {
             } else {
                 const element = jObj.length > 0 ? jObj[0] : false;
                 let styleValue;
-                if (element && typeof element.style !== 'undefined') {
+                try {
                     const { style } = element;
                     const isConnected = DOM.isConnected(element);
                     if (!isConnected) {
@@ -22,6 +22,8 @@ export default class Style {
                     if (!isConnected) {
                         element.parentNode.removeChild(element);
                     }
+                } catch (e) {
+                    console.error(e);
                 }
                 return styleValue;
             }

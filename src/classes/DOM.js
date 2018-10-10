@@ -10,7 +10,7 @@ export default class DOM {
     }
 
     static isElement(element) {
-        return element && element instanceof Element;
+        return element && element.nodeType;
     }
 
     static appendTo(jObj, selector) {
@@ -22,7 +22,11 @@ export default class DOM {
         }
         parents.forEach(parentElement => {
             jObj.elements.forEach(element => {
-                parentElement.appendChild(element);
+                try {
+                    parentElement.appendChild(element);
+                } catch (e) {
+                    console.error(e);
+                }
             });
         });
         return jObj;

@@ -26,6 +26,30 @@ describe('jQry(\'<div></div>\')', () => {
     });
 });
 
+describe('jQry(\'<!doctype html><html><head></head><body><p>text</p></body></html>\')[0].tagName', () => {
+    it('create HTML element', () => {
+        expect(jQry('<!doctype html><html><head></head><body><p>text</p></body></html>')[0].tagName).toEqual('HTML');
+    });
+});
+
+describe('jQry(\'<html></html>\')[0].tagName', () => {
+    it('create empty HTML element', () => {
+        expect(jQry('<html></html>')[0].tagName).toEqual('HTML');
+    });
+});
+
+describe('jQry(\'<body><div></div></body>\')[0].tagName', () => {
+    it('create BODY element', () => {
+        expect(jQry('<body><div></div></body>')[0].tagName).toEqual('BODY');
+    });
+});
+
+describe('jQry(\'<head><meta charset="UTF-8"></head>\')[0].tagName', () => {
+    it('create HEAD element', () => {
+        expect(jQry('<head><meta charset="UTF-8"></head>')[0].tagName).toEqual('HEAD');
+    });
+});
+
 describe('jQry(\'<p><i>This is</i> find <i>test</i>\').find(\'i\')', () => {
     it('select query', () => {
         expect(jQry('<p><i>This is</i> find <i>test</i>').find('i')).toHaveLength(2);
