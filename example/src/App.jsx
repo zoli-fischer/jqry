@@ -1,7 +1,11 @@
 import React from 'react';
 import './App.less';
 import AutoState from '@zoli-fischer/auto-state';
+import $ from 'jquery';
 import jQry from 'jqry';
+
+window.jQry = jQry;
+window.$ = $;
 
 class App extends AutoState {
     constructor(props) {
@@ -12,18 +16,27 @@ class App extends AutoState {
     }
 
     componentDidMount() {
-        this.test('jQry(\'<div></div>\').length', () => jQry('<div id="test"></div>').length);
-        this.test('jQry(\'<!doctype html><html><head></head><body><p>1</p></body></html>\')[0].tagName', () => jQry('<!doctype html><html><head></head><body><p>1</p></body></html>')[0].tagName);
-        this.test('jQry(\'<html></html>\')[0].tagName', () => jQry('<html></html>')[0].tagName);
-        this.test('jQry(\'<body><div></div></body>\')[0].tagName', () => jQry('<body><div></div></body>')[0].tagName);
-        this.test('jQry(\'<head><meta charset="UTF-8" /></head>\')[0].tagName', () => jQry('<head><meta charset="UTF-8"></head>')[0].tagName);
-        this.test('jQry(\'<p><i>This is</i> find <i>test</i>\').find(\'i\').length', () => jQry('<p><i>This is</i> find <i>test</i>').find('i').length);
-        this.test('jQry(\'<div style="display: none;"></div>\').appendTo(\'body\').parent().length', () => jQry('<div style="display: none;"></div>').appendTo('body').parent().length);
-        this.test('jQry(\'<div style="display: none;"></div>\').appendTo(\'body\').detach().parent().length', () => jQry('<div style="display: none;"></div>').appendTo('body').detach().parent().length);
-        this.test('jQry(\'<div></div>\').css(\'display\')', () => jQry('<div></div>').css('display'));
-        this.test('jQry(\'<div style="background: #ff0000;"></div>\').css(\'background\')', () => jQry('<div style="background: #ff0000;"></div>').css('background'));
-        this.test('jQry(\'<input disabled />\').prop(\'disabled\')', () => jQry('<input disabled />').prop('disabled'));
-        this.test('jQry(\'<div />\').on(\'custom-event\', event => { console.log(event); }).trigger(\'custom-event\')', () => jQry('<div />').on('custom-event', event => { console.log(event); }).trigger('custom-event'));
+        this._('jQry(\'<div></div>\').length');
+        this._('jQry(\'<!--This is a comment-->\')[0].nodeType');
+        this._('jQry(\'<div></div><p><b> </b></p>\').length');
+        this._('jQry(\'<div><b> </b></div><p><b> </b></p> text <b />\').find(\'b\').length');
+        this._('jQry(\'<!doctype html><html><head></head><body><p>1</p></body></html>\')[0].tagName');
+        this._('jQry(\'<html></html>\')[0].tagName');
+        this._('jQry(\'<body><div></div></body>\')[0].tagName');
+        this._('jQry(\'<head><meta charset="UTF-8" /></head>\')[0].tagName');
+        this._('jQry(\'<p><i>This is</i> find <i>test</i>\').find(\'i\').length');
+        this._('jQry(\'<div style="display: none;"></div>\').appendTo(\'body\').parent().length');
+        this._('jQry(\'<div style="display: none;"></div>\').appendTo(\'body\').detach().parent().length');
+        this._('jQry(\'<div></div>\').css(\'display\')');
+        this._('jQry(\'<div style="background: #ff0000;"></div>\').css(\'background\')');
+        this._('jQry(\'<input disabled />\').prop(\'disabled\')');
+        this._('jQry(\'<div />\').on(\'custom-event\', event => { console.log(event); }).trigger(\'custom-event\')');
+    }
+
+    _(cmd) {
+        this.test(cmd, () => eval(cmd));
+        const $cmd = cmd.replace(/jQry/g, '$');
+        this.test($cmd, () => eval($cmd));
     }
 
     test(label, fn) {
@@ -37,6 +50,8 @@ class App extends AutoState {
 
         if (typeof result === 'boolean') {
             result = result ? 'true' : 'false';
+        } else if (typeof result === 'undefined') {
+            error = true;
         } else if (typeof result === 'object') {
             result = JSON.stringify(result);
         }

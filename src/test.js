@@ -26,6 +26,24 @@ describe('jQry(\'<div></div>\')', () => {
     });
 });
 
+describe('jQry(\'<!--This is a comment-->\')[0].nodeType', () => {
+    it('create comment', () => {
+        expect(jQry('<!--This is a comment-->')[0].nodeType).toEqual(8);
+    });
+});
+
+describe('jQry(\'<div></div><p></p>\').length', () => {
+    it('create multiple elements', () => {
+        expect(jQry('<div></div><p></p>')).toHaveLength(2);
+    });
+});
+
+describe('jQry(\'<div><b> </b></div><p><b> </b></p> text <b />\').find(\'b\').length', () => {
+    it('create multiple elements and search for child elements', () => {
+        expect(jQry('<div><b> </b></div><p><b> </b></p> text <b />').find('b')).toHaveLength(2);
+    });
+});
+
 describe('jQry(\'<!doctype html><html><head></head><body><p>text</p></body></html>\')[0].tagName', () => {
     it('create HTML element', () => {
         expect(jQry('<!doctype html><html><head></head><body><p>text</p></body></html>')[0].tagName).toEqual('HTML');

@@ -8,17 +8,10 @@ import Obj from './Obj';
 export default class jQryObject {
     constructor(selector) {
         const elements = Selector.select(selector);
-        this.elements = [];
+        this.elements = elements;
         let i = 0;
         Obj.values(elements).forEach(element => {
-            if (DOM.isElement(element) || DOM.isWindow(element) || DOM.isDocument(element)) {
-                this.elements.push(element);
-                this[i++] = element;
-            }
-            if (!DOM.isConnected(element)) {
-                document.body.appendChild(element);
-                element.parentNode.removeChild(element);
-            }
+            this[i++] = element;
         });
         this.length = this.elements.length;
     }

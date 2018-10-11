@@ -1,4 +1,4 @@
-import DOM from './DOM';
+// import DOM from './DOM';
 
 export default class Style {
     static css(jObj, styles, value) {
@@ -9,21 +9,10 @@ export default class Style {
             } else {
                 const element = jObj.length > 0 ? jObj[0] : false;
                 let styleValue;
-                try {
-                    const { style } = element;
-                    const isConnected = DOM.isConnected(element);
-                    if (!isConnected) {
-                        document.body.appendChild(element);
-                    }
-                    const computedStyle = window.getComputedStyle(element);
-                    if (element && (style || computedStyle)) {
-                        styleValue = style[styles] || computedStyle[styles];
-                    }
-                    if (!isConnected) {
-                        element.parentNode.removeChild(element);
-                    }
-                } catch (e) {
-                    console.error(e);
+                const { style } = element;
+                const computedStyle = window.getComputedStyle(element);
+                if (element && (style || computedStyle)) {
+                    styleValue = style[styles] || computedStyle[styles];
                 }
                 return styleValue;
             }

@@ -9,8 +9,12 @@ export default class DOM {
         return element && element.constructor === document.constructor;
     }
 
-    static isElement(element) {
+    static isNode(element) {
         return element && element.nodeType;
+    }
+
+    static isTextNode(element) {
+        return element && element.nodeType === 3;
     }
 
     static appendTo(jObj, selector) {
