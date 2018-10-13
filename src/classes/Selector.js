@@ -1,6 +1,7 @@
 import jQryObject from './jQryObject';
 import Obj from './Obj';
 import DOM from './DOM';
+import Style from './Style';
 
 export default class Selector {
     static select(selector) {
@@ -37,7 +38,7 @@ export default class Selector {
                     }
                 }
             } else {
-                Obj.values(document.querySelectorAll(selector)).forEach(queryElement => {
+                this._querySelectorAll(document, selector).forEach(queryElement => {
                     elements.push(queryElement);
                 });
             }
@@ -60,10 +61,49 @@ export default class Selector {
     static find(jObj, selector) {
         const elements = [];
         jObj.forEach(element => {
-            Obj.values(element.querySelectorAll(selector)).forEach(queryElement => {
+            this._querySelectorAll(element, selector).forEach(queryElement => {
                 elements.push(queryElement);
             });
         });
         return new jQryObject(elements);
+    }
+
+    static _querySelectorAll(element, selector) {
+        selector = selector.trim();
+        let scopeClass = false;
+        // only alter node elements
+        if (DOM.isNode(element)) {
+            // use :scope for query selector if supported else create scope class
+            if (Selector._isScopeSupportedInQuerySelector()) {
+                selector = ':scope ' + selector;
+            } else {
+                scopeClass = 'jqry_qs_scope_' + Math.random().toString(36).substring(2, 16);
+                selector = '.' + scopeClass + ' ' + selector;
+            }
+        }
+        const elements = [];
+        // add scope class if needed
+        if (scopeClass) {
+            Style._addClass(element, scopeClass);
+        }
+        Obj.values(element.querySelectorAll(selector)).forEach(queryElement => {
+            elements.push(queryElement);
+        });
+        // remove scope class if needed
+        if (scopeClass) {
+            Style._removeClass(element, scopeClass);
+        }
+        return elements;
+    }
+
+    static _isScopeSupportedInQuerySelector() {
+        if (typeof Selector.__isScopeSupportedInQuerySelector === 'undefined') {
+            try {
+                Selector.__isScopeSupportedInQuerySelector = typeof document.querySelectorAll(':scope') !== 'undefined';
+            } catch (error) {
+                Selector.__isScopeSupportedInQuerySelector = false;
+            }
+        }
+        return Selector.__isScopeSupportedInQuerySelector;
     }
 }

@@ -39,4 +39,26 @@ export default class Style {
 
         return jObj;
     }
+
+    static _addClass(element, ...args) {
+        if (typeof element.classList !== 'undefined') {
+            args.forEach(className => {
+                if (className.trim() !== '') {
+                    element.classList.add(className);
+                }
+            });
+        }
+        return element;
+    }
+
+    static _removeClass(element, ...args) {
+        if (typeof element.classList !== 'undefined') {
+            args.forEach(className => {
+                if (className.trim() !== '') {
+                    element.classList.add(className);
+                }
+            });
+        }
+        return element;
+    }
 }

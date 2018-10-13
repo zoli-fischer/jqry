@@ -10,7 +10,7 @@ export default class DOM {
     }
 
     static isNode(element) {
-        return element && element.nodeType;
+        return element && element.nodeType && !DOM.isWindow(element) && !DOM.isDocument(element);
     }
 
     static isTextNode(element) {
