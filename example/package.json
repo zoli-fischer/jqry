@@ -5,8 +5,9 @@
   "main": "index.jsx",
   "scripts": {
     "test": "cross-env echo \"Error: no test specified\" && exit 1",
-    "dev": "cross-env webpack-dev-server",
-    "build": "cross-env ./node_modules/webpack/bin/webpack.js"
+    "dev": "cross-env WEBPACK_ENV=dev webpack-dev-server",
+    "devpoll": "cross-env WEBPACK_ENV=dev WEBPACK_POLL=true webpack-dev-server",
+    "build": "cross-env WEBPACK_ENV=build ./node_modules/webpack/bin/webpack.js"
   },
   "author": "",
   "license": "MIT",

@@ -2,6 +2,9 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const path = require('path');
 
+console.log('WEBPACK_ENV: ', process.env.WEBPACK_ENV);
+console.log('WEBPACK_POLL: ', process.env.WEBPACK_POLL ? 'true' : 'false');
+
 const libraryName = 'index';
 const entry = {};
 entry[libraryName] = path.resolve(__dirname, 'src/index.js');
@@ -37,19 +40,25 @@ const config = {
             },
         ],
     },
-    optimization: {
+    plugins: [
+        new CleanWebpackPlugin(['lib']),
+    ],
+};
+
+if (process.env.WEBPACK_ENV === 'build') {
+    config.optimization = {
         minimize: true,
         minimizer: [new UglifyJsPlugin({
             include: /\.min\.js$/,
         })],
-    },
-    plugins: [
-        new CleanWebpackPlugin(['lib']),
-    ],
-    watchOptions: {
-        ignored: /node_modules/,
+    };
+}
+
+if (process.env.WEBPACK_POLL) {
+    config.watchOptions = {
+        ignored: [/node_modules/, /example/, /lib/],
         poll: 1000,
-    },
-};
+    };
+}
 
 module.exports = config;

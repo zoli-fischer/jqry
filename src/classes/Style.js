@@ -1,13 +1,11 @@
-// import DOM from './DOM';
-
 export default class Style {
-    static css(jObj, styles, value) {
+    // eslint-disable-next-line consistent-return
+    static css(element, styles, value) {
         const css = {};
         if (typeof styles === 'string') {
             if (typeof value !== 'undefined') {
-                css[styles] = value;
+                css[styles] = value.trim();
             } else {
-                const element = jObj.length > 0 ? jObj[0] : false;
                 let styleValue;
                 const { style } = element;
                 const computedStyle = window.getComputedStyle(element);
@@ -22,27 +20,23 @@ export default class Style {
             });
         }
 
-        jObj.forEach(element => {
-            Object.keys(css).forEach(key => {
-                // Don't set styles on text and comment nodes
-                if (element.nodeType === 3 || element.nodeType === 8 || !element.style) {
-                    return;
-                }
-                try {
-                    element.style[key] = css[key];
-                } catch (e) {
-                    // eslint-disable-next-line no-console
-                    console.log(e);
-                }
-            });
+        Object.keys(css).forEach(key => {
+            // Don't set styles on text and comment nodes
+            if (element.nodeType === 3 || element.nodeType === 8 || !element.style) {
+                return;
+            }
+            try {
+                element.style[key] = css[key];
+            } catch (e) {
+                // eslint-disable-next-line no-console
+                console.log(e);
+            }
         });
-
-        return jObj;
     }
 
-    static _addClass(element, ...args) {
+    static addClass(element, classes) {
         if (typeof element.classList !== 'undefined') {
-            args.forEach(className => {
+            classes.split(' ').forEach(className => {
                 if (className.trim() !== '') {
                     element.classList.add(className);
                 }
@@ -51,11 +45,11 @@ export default class Style {
         return element;
     }
 
-    static _removeClass(element, ...args) {
+    static removeClass(element, classes) {
         if (typeof element.classList !== 'undefined') {
-            args.forEach(className => {
+            classes.split(' ').forEach(className => {
                 if (className.trim() !== '') {
-                    element.classList.add(className);
+                    element.classList.remove(className);
                 }
             });
         }

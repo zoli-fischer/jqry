@@ -1,5 +1,3 @@
-import jQryObject from './jQryObject';
-
 export default class DOM {
     static isWindow(element) {
         return element && element.constructor === window.constructor;
@@ -17,25 +15,6 @@ export default class DOM {
         return element && element.nodeType === 3;
     }
 
-    static appendTo(jObj, selector) {
-        let parents = false;
-        if (selector instanceof jQryObject) {
-            parents = selector;
-        } else {
-            parents = new jQryObject(selector);
-        }
-        parents.forEach(parentElement => {
-            jObj.elements.forEach(element => {
-                try {
-                    parentElement.appendChild(element);
-                } catch (e) {
-                    console.error(e);
-                }
-            });
-        });
-        return jObj;
-    }
-
     static isConnected(element) {
         if (element && typeof element.isConnected !== 'undefined') {
             return element.isConnected;
@@ -46,18 +25,20 @@ export default class DOM {
         return true;
     }
 
-    static detach(jObj) {
-        jObj.forEach(element => {
+    static detach(element) {
+        try {
             element.parentNode.removeChild(element);
-        });
-        return jObj;
+        } catch (error) {
+            console.error(error);
+        }
     }
 
-    static parent(jObj) {
-        const elements = [];
-        jObj.forEach(element => {
-            elements.push(element.parentNode);
-        });
-        return new jQryObject(elements);
+    static parent(element) {
+        try {
+            return element.parentNode;
+        } catch (error) {
+            console.error(error);
+        }
+        return undefined;
     }
 }

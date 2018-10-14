@@ -24,12 +24,18 @@ class App extends AutoState {
         this._('create empty HTML element', 'jQry(\'<html></html>\')[0].tagName', 'HTML');
         this._('create BODY element', 'jQry(\'<body><div></div></body>\')[0].tagName', 'BODY');
         this._('create HEAD element', 'jQry(\'<head><meta charset="UTF-8" /></head>\')[0].tagName', 'HEAD');
-        this._('select query', 'jQry(\'<p><i>This is</i> find <i>test</i>\').find(\'i\').length', 2);
+        this._('select query - tag name', 'jQry(\'<p><i>This is</i> find <i>test</i>\').find(\'i\').length', 2);
+        this._('select query - css', 'jQry(\'<div><b> </b><b> </b></div><div><b>1</b></div>\').find(\'> b:first-child\').length', 2);
         this._('element appendTo & getting parent', 'jQry(\'<div style="display: none;"></div>\').appendTo(\'body\').parent().length', 1);
         this._('element detach', 'jQry(\'<div style="display: none;"></div>\').appendTo(\'body\').detach().parent().length', 0);
-        this._('get computed style value', 'jQry(\'<div></div>\').css(\'display\')', (result) => typeof result === 'string' );
-        this._('get element style value', 'jQry(\'<div style="background: #ff0000;"></div>\').css(\'background\')', 'rgb(255, 0, 0)');
         this._('get element property', 'jQry(\'<input disabled />\').prop(\'disabled\')', 'true');
+        this._('set element property', 'jQry(\'<iframe />\').prop(\'allowfullscreen\', true).prop(\'allowfullscreen\')', 'true');
+        this._('set element property object', 'jQry(\'<input />\').prop({type: \'text\'}).prop(\'type\')', 'text');
+        this._('get computed style value', 'jQry(\'<div></div>\').css(\'display\')', (result) => typeof result === 'string');
+        this._('set element style object', 'jQry(\'<p></p>\').css({border: \'1px solid #ff0000\'}).css(\'border\')', (result) => typeof result === 'string');
+        this._('get element style value', 'jQry(\'<div style="background: #ff0000;"></div>\').css(\'background\')', 'rgb(255, 0, 0)');
+        this._('add class to element', 'jQry(\'<div></div>\').addClass(\'text-holder\').prop(\'class\')', 'text-holder');
+        this._('remove class from element', 'jQry(\'<div class="text-holder big"></div>\').removeClass(\'big\').prop(\'class\')', 'text-holder');
         // TODO: work on events - this._('custom event', 'jQry(\'<div />\').on(\'custom-event\', event => { console.log(event); }).trigger(\'custom-event\')');
     }
 

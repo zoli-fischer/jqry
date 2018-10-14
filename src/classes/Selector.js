@@ -58,14 +58,12 @@ export default class Selector {
         return validElements;
     }
 
-    static find(jObj, selector) {
+    static find(element, selector) {
         const elements = [];
-        jObj.forEach(element => {
-            this._querySelectorAll(element, selector).forEach(queryElement => {
-                elements.push(queryElement);
-            });
+        this._querySelectorAll(element, selector).forEach(queryElement => {
+            elements.push(queryElement);
         });
-        return new jQryObject(elements);
+        return elements;
     }
 
     static _querySelectorAll(element, selector) {
@@ -84,14 +82,14 @@ export default class Selector {
         const elements = [];
         // add scope class if needed
         if (scopeClass) {
-            Style._addClass(element, scopeClass);
+            Style.addClass(element, scopeClass);
         }
         Obj.values(element.querySelectorAll(selector)).forEach(queryElement => {
             elements.push(queryElement);
         });
         // remove scope class if needed
         if (scopeClass) {
-            Style._removeClass(element, scopeClass);
+            Style.removeClass(element, scopeClass);
         }
         return elements;
     }

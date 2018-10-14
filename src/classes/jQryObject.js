@@ -31,49 +31,118 @@ export default class jQryObject {
     /** Selector */
 
     find(selector) {
-        return Selector.find(this, selector);
+        let elements = [];
+        this.forEach(element => {
+            elements = [...elements, ...Selector.find(element, selector)];
+        });
+        return new jQryObject(elements);
     }
 
     /** Style */
     css(styles, value) {
-        return Style.css(this, styles, value);
+        if (typeof styles === 'string') {
+            if (typeof value === 'undefined') {
+                return Style.css(this[0], styles, value);
+            }
+        }
+        this.forEach(element => {
+            Style.css(element, styles, value);
+        });
+        return this;
+    }
+
+    addClass(classes) {
+        this.forEach(element => {
+            Style.addClass(element, classes);
+        });
+        return this;
+    }
+
+    removeClass(classes) {
+        this.forEach(element => {
+            Style.removeClass(element, classes);
+        });
+        return this;
     }
 
     /** Prop */
 
-    prop(propName, value) {
-        return Prop.prop(this, propName, value);
+    prop(props, value) {
+        // return Prop.prop(this, props, value);
+        if (typeof props === 'string') {
+            if (typeof value === 'undefined') {
+                return Prop.prop(this[0], props, value);
+            }
+        }
+        this.forEach(element => {
+            Prop.prop(element, props, value);
+        });
+        return this;
     }
 
     /** DOM */
 
     appendTo(selector) {
-        return DOM.appendTo(this, selector);
+        let parents = false;
+        if (selector instanceof jQryObject) {
+            parents = selector;
+        } else {
+            parents = new jQryObject(selector);
+        }
+        parents.forEach(parentElement => {
+            this.elements.forEach(element => {
+                try {
+                    parentElement.appendChild(element);
+                } catch (e) {
+                    console.error(e);
+                }
+            });
+        });
+        return this;
     }
 
     detach() {
-        return DOM.detach(this);
+        this.forEach(element => {
+            DOM.detach(element);
+        });
+        return this;
     }
 
     parent() {
-        return DOM.parent(this);
+        const elements = [];
+        this.forEach(element => {
+            elements.push(DOM.parent(element));
+        });
+        return new jQryObject(elements);
     }
 
     /** Event */
 
     on(event, fn) {
-        return Event.on(this, event, fn);
+        this.forEach(element => {
+            Event.on(element, event, fn);
+        });
+        return this;
     }
 
     off(event, fn) {
-        return Event.off(this, event, fn);
+        this.forEach(element => {
+            Event.off(element, event, fn);
+        });
+        return this;
     }
 
     trigger(event, data) {
-        return Event.trigger(this, event, data);
+        this.forEach(element => {
+            Event.trigger(element, event, data);
+        });
+        return this;
     }
 
     click() {
-        return Event.click(this);
+        this.forEach(element => {
+            Event.click(element);
+        });
+        return this;
     }
 }

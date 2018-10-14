@@ -2,6 +2,9 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
+console.log('WEBPACK_ENV: ', process.env.WEBPACK_ENV);
+console.log('WEBPACK_POLL: ', process.env.WEBPACK_POLL ? 'true' : 'false');
+
 module.exports = {
     output: {
         path: path.resolve(__dirname, 'build'),
@@ -45,8 +48,11 @@ module.exports = {
             },
         ],
     },
-    watchOptions: {
-        ignored: /node_modules/,
-        poll: 1000,
-    },
 };
+
+if (process.env.WEBPACK_POLL) {
+    module.exports.watchOptions = {
+        ignored: [/node_modules/],
+        poll: 1000,
+    };
+}

@@ -12,6 +12,7 @@
   "scripts": {
     "test": "cross-env mocha --require babel-core/register --colors -w ./src/test.js",
     "dev": "cross-env WEBPACK_ENV=dev webpack --progress --colors --watch --config webpack.config.js",
+    "devpoll": "cross-env WEBPACK_ENV=dev WEBPACK_POLL=true webpack --progress --colors --watch --config webpack.config.js",
     "build": "cross-env WEBPACK_ENV=build webpack --config webpack.config.js",
     "publish-public": "cross-env npm publish --access public",
     "publish-dry": "cross-env npm publish --access public --dry-run",
