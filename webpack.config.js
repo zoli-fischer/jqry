@@ -7,8 +7,8 @@ console.log('WEBPACK_POLL: ', process.env.WEBPACK_POLL ? 'true' : 'false');
 
 const libraryName = 'index';
 const entry = {};
-entry[libraryName] = path.resolve(__dirname, 'src/index.js');
-entry[libraryName + '.min'] = path.resolve(__dirname, 'src/index.js');
+entry[libraryName] = path.resolve(__dirname, 'src/jQry.js');
+entry[libraryName + '.min'] = path.resolve(__dirname, 'src/jQry.js');
 ['All', 'Object', 'Event'].forEach(element => {
     const name = element.toLocaleLowerCase() === 'all' ? 'index' : element.toLocaleLowerCase();
     entry['polyfill/' + name] = path.resolve(__dirname, 'src/polyfill/' + element + '.js');

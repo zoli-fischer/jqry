@@ -10,14 +10,14 @@
     "npm": ">=5"
   },
   "scripts": {
-    "test": "cross-env mocha --require babel-core/register --colors -w ./src/test.js",
-    "dev": "cross-env WEBPACK_ENV=dev webpack --progress --colors --watch --config webpack.config.js",
-    "devpoll": "cross-env WEBPACK_ENV=dev WEBPACK_POLL=true webpack --progress --colors --watch --config webpack.config.js",
-    "build": "cross-env WEBPACK_ENV=build webpack --config webpack.config.js",
-    "publish-public": "cross-env npm publish --access public",
-    "publish-dry": "cross-env npm publish --access public --dry-run",
-    "predeploy": "cross-env cd example && npm install && npm run build",
-    "deploy": "cross-env gh-pages -d example/build"
+    "test": "mocha --require babel-core/register --colors -w ./test/test.js",
+    "dev": "WEBPACK_ENV=dev webpack --progress --colors --watch --config webpack.config.js",
+    "devpoll": "WEBPACK_ENV=dev WEBPACK_POLL=true webpack --progress --colors --watch --config webpack.config.js",
+    "build": "WEBPACK_ENV=build webpack --config webpack.config.js",
+    "publish-public": "npm publish --access public",
+    "publish-dry": "npm publish --access public --dry-run",
+    "predeploy": "cd example && npm install && npm run build",
+    "deploy": "gh-pages -d example/build"
   },
   "repository": {
     "type": "git",
@@ -40,7 +40,6 @@
     "babel-loader": "^7.1.5",
     "babel-preset-env": "^1.7.0",
     "clean-webpack-plugin": "^0.1.19",
-    "cross-env": "^5.2.0",
     "eslint": "^5.6.1",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-loader": "^2.1.1",

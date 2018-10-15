@@ -1,6 +1,6 @@
 import expect from 'expect';
 import { JSDOM } from 'jsdom';
-import jQry from '.';
+import jQry from '../src/jQry';
 
 const dom = new JSDOM(`<!DOCTYPE html>
 <head>

@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.jsx",
   "scripts": {
-    "test": "cross-env echo \"Error: no test specified\" && exit 1",
-    "dev": "cross-env WEBPACK_ENV=dev webpack-dev-server",
-    "devpoll": "cross-env WEBPACK_ENV=dev WEBPACK_POLL=true webpack-dev-server",
-    "build": "cross-env WEBPACK_ENV=build ./node_modules/webpack/bin/webpack.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "WEBPACK_ENV=dev webpack-dev-server",
+    "devpoll": "WEBPACK_ENV=dev WEBPACK_POLL=true webpack-dev-server",
+    "build": "WEBPACK_ENV=build ./node_modules/webpack/bin/webpack.js"
   },
   "author": "",
   "license": "MIT",
@@ -19,7 +19,6 @@
     "babel-preset-react": "^6.24.1",
     "clean-webpack-plugin": "^0.1.19",
     "core-js": "^2.5.7",
-    "cross-env": "^5.2.0",
     "css-loader": "^1.0.0",
     "eslint": "^5.6.1",
     "eslint-config-airbnb": "^17.1.0",
