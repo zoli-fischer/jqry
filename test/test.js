@@ -8,6 +8,8 @@ const dom = new JSDOM(`<!DOCTYPE html>
 <body>
 </body>
 </html>`);
+
+global.jQry = jQry;
 global.window = dom.window;
 global.document = dom.window.document;
 global.Element = dom.window.Element;
