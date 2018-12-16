@@ -1,6 +1,6 @@
 {
   "name": "jqry",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Pre-release - JavaScript library for DOM operations (jQuery alernative - smaller)",
   "main": "lib/index.js",
   "module": "lib/index.js",
