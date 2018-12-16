@@ -1,4 +1,4 @@
-# jqry - Pre-release version
+# under work - please do not use this until final release - jqry - Pre-release version
 
 > JavaScript library for DOM operations (jQuery alernative - smaller)
 
