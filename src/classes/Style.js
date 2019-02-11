@@ -45,6 +45,13 @@ export default class Style {
         return element;
     }
 
+    static addClassElements(elements, classes) {
+        let i = 0;
+        elements.forEach((element) => {
+            Style.addClass(element, typeof classes === 'function' ? (() => classes.call(element, i++, element.className))() : classes);
+        });
+    }
+
     static removeClass(element, classes) {
         if (typeof element.classList !== 'undefined') {
             classes.split(' ').forEach(className => {

@@ -6,14 +6,14 @@ import Event from './Event';
 import Obj from './Obj';
 
 export default class jQryObject {
-    constructor(selector) {
-        const elements = Selector.select(selector);
-        this.elements = elements;
-        let i = 0;
-        Obj.values(elements).forEach(element => {
-            this[i++] = element;
-        });
-        this.length = this.elements.length;
+    constructor(selector, prevObject = null) {
+        this.elements = [];
+        this.prevObject = prevObject;
+        this.add(selector);
+    }
+
+    get length() {
+        return this.elements.length;
     }
 
     forEach(callback) {
@@ -35,7 +35,32 @@ export default class jQryObject {
         this.forEach(element => {
             elements = [...elements, ...Selector.find(element, selector)];
         });
-        return new jQryObject(elements);
+        return new jQryObject(elements, this);
+    }
+
+    eq(index) {
+        return new jQryObject(typeof this.elements[index] !== 'undefined' ? this.elements[index] : null);
+    }
+
+    // TODO: add context
+    add(selector) {
+        const elements = Selector.select(selector);
+        this.elements = [...this.elements, ...elements];
+        let i = 0;
+        Obj.values(this.elements).forEach(element => {
+            this[i++] = element;
+        });
+        return this;
+    }
+
+    addBack(selector = null) {
+        const elements = [...[], ...(selector ? this.find(selector) : this.elements)];
+        if (this.prevObject) {
+            this.prevObject.addBack().forEach((element) => {
+                elements.push(element);
+            });
+        }
+        return new jQryObject(elements, this);
     }
 
     /** Style */
@@ -52,9 +77,8 @@ export default class jQryObject {
     }
 
     addClass(classes) {
-        this.forEach(element => {
-            Style.addClass(element, classes);
-        });
+        console.log(this.elements);
+        Style.addClassElements(this.elements, classes);
         return this;
     }
 

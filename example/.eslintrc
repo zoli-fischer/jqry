@@ -24,6 +24,8 @@
         "react/jsx-uses-vars": "error",
         "react/jsx-uses-react": "error",
         "no-console": 0,
+        "quotes": 0,
+        "no-eval": 0,
         "indent": 0,
         "no-tabs": 0,
         "max-len": 0,
