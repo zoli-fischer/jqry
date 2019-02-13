@@ -26,8 +26,14 @@ describe('jQry', () => {
 function _(desc, cmd, targetValue) {
     describe(cmd.toString(), () => {
         it(desc, () => {
-            let r;
-            expect(r = cmd(jQry)).toEqual(typeof targetValue === 'function' ? targetValue(r) : targetValue);
+            if (typeof targetValue === 'function') {
+                expect((() => {
+                    const r = cmd(jQry);
+                    return targetValue(r);
+                })()).toEqual(true);
+            } else {
+                expect(cmd(jQry)).toEqual(targetValue);
+            }
         });
     });
 }

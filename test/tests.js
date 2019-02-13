@@ -20,8 +20,8 @@ test('.addBack()', $ => $('<div><p></p><p></p></div>').find('p').addBack().lengt
 test('.addBack(selector)', $ => $('<div><span /><p><span /></p><p><span /></p></div>').find('p').addBack('> span').length, 3);
 test('element appendTo & getting parent', $ => $('<div style="display: none;"></div>').appendTo('body').parent().length, 1);
 test('element detach', $ => $('<div style="display: none;"></div>').appendTo('body').detach().parent().length, 0);
-test('get element property', $ => $('<input disabled />').prop('disabled'), 'true');
-test('set element property', $ => $('<iframe />').prop('allowfullscreen', true).prop('allowfullscreen'), 'true');
+test('get element property', $ => $('<input disabled />').prop('disabled'), true);
+test('set element property', $ => $('<iframe />').prop('allowfullscreen', true).prop('allowfullscreen'), true);
 test('set element property object', $ => $('<input />').prop({ type: 'text' }).prop('type'), 'text');
 test('get computed style value', $ => $('<div></div>').css('display'), (result) => typeof result === 'string');
 test('set element style object', $ => $('<p></p>').css({ border: '1px solid #ff0000' }).css('border'), (result) => typeof result === 'string');

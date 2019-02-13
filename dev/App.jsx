@@ -37,20 +37,23 @@ class App extends React.Component {
             error = response.message;
         }
 
+        if (typeof targetValue === 'function') {
+            result = targetValue(result);
+            if (!result) {
+                error = false;
+            }
+        } else if (!error && result !== targetValue) {
+            error = true;
+        }
+
+        const resultType = typeof result;
+
         if (typeof result === 'boolean') {
             result = result ? 'true' : 'false';
         } else if (typeof result === 'undefined') {
             error = true;
         } else if (typeof result === 'object') {
             result = JSON.stringify(result);
-        }
-
-        if (typeof targetValue === 'function') {
-            if (!targetValue(result)) {
-                error = false;
-            }
-        } else if (!error && result !== targetValue) {
-            error = true;
         }
 
         // eslint-disable-next-line react/no-access-state-in-setstate
@@ -60,6 +63,7 @@ class App extends React.Component {
             label,
             desc,
             result,
+            resultType,
             error,
             targetValue,
         });
@@ -87,7 +91,7 @@ class App extends React.Component {
                                     <td>{test.desc}</td>
                                     <td><code>{test.label}</code></td>
                                     <td>{test.result}</td>
-                                    <td>{typeof test.result}</td>
+                                    <td>{test.resultType}</td>
                                     <td>{test.error}</td>
                                 </tr>
                             ))

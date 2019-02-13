@@ -32,7 +32,7 @@ export default class jQryObject {
 
     find(selector) {
         let elements = [];
-        this.elements.forEach(element => {
+        this.forEach(element => {
             elements = [...elements, ...Selector.find(element, selector)];
         });
         return new jQryObject(elements, this);
@@ -92,10 +92,8 @@ export default class jQryObject {
 
     prop(props, value) {
         // return Prop.prop(this, props, value);
-        if (typeof props === 'string') {
-            if (typeof value === 'undefined') {
-                return Prop.prop(this[0], props, value);
-            }
+        if (typeof props === 'string' && typeof value === 'undefined') {
+            return Prop.prop(this[0], props);
         }
         this.forEach(element => {
             Prop.prop(element, props, value);
@@ -113,7 +111,7 @@ export default class jQryObject {
             parents = new jQryObject(selector);
         }
         parents.forEach(parentElement => {
-            this.elements.forEach(element => {
+            this.forEach(element => {
                 try {
                     parentElement.appendChild(element);
                 } catch (e) {
