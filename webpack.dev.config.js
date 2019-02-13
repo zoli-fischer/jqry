@@ -10,10 +10,10 @@ module.exports = {
         path: path.resolve(__dirname, 'build'),
         filename: './js/index.js',
     },
-    entry: path.resolve(__dirname, 'src/index.jsx'),
+    entry: path.resolve(__dirname, 'dev/index.jsx'),
     plugins: [
         new CleanWebpackPlugin(['build']),
-        new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'public/index.html') }),
+        new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'dev/public/index.html') }),
     ],
     mode: 'development',
     resolve: {

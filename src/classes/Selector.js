@@ -97,7 +97,7 @@ export default class Selector {
     static _isScopeSupportedInQuerySelector() {
         if (typeof Selector.__isScopeSupportedInQuerySelector === 'undefined') {
             try {
-                Selector.__isScopeSupportedInQuerySelector = typeof document.querySelectorAll(':scope') !== 'undefined';
+                Selector.__isScopeSupportedInQuerySelector = navigator.userAgent && typeof document.querySelectorAll(':scope') !== 'undefined';
             } catch (error) {
                 Selector.__isScopeSupportedInQuerySelector = false;
             }

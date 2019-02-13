@@ -32,7 +32,7 @@ export default class jQryObject {
 
     find(selector) {
         let elements = [];
-        this.forEach(element => {
+        this.elements.forEach(element => {
             elements = [...elements, ...Selector.find(element, selector)];
         });
         return new jQryObject(elements, this);
@@ -77,7 +77,6 @@ export default class jQryObject {
     }
 
     addClass(classes) {
-        console.log(this.elements);
         Style.addClassElements(this.elements, classes);
         return this;
     }
